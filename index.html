@@ -1,206 +1,267 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>For Kashish </title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background: linear-gradient(45deg, #ff9a9e, #fecfef);
-            overflow: hidden;
-            cursor: url('https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Red_Heart.svg/32px-Red_Heart.svg.png') 16 16, auto;
-        }
+<title>For Kashish</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+<style>
+body{
+  margin:0;
+  font-family:'Fredoka',sans-serif;
+  background:linear-gradient(135deg,#ffd6e8,#fff1f6);
+  height:100vh;
+  overflow:hidden;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
 
-        h1 {
-            margin-top: 90px;
-            font-size: 42px;
-            color: white;
-        }
+.card{
+  background:rgba(255,255,255,0.95);
+  padding:50px 55px;
+  border-radius:28px;
+  box-shadow:0 25px 70px rgba(255,105,135,0.25);
+  text-align:center;
+  width:440px;
+  position:relative;
+  z-index:2;
+}
 
-        #countdownTop {
-            color: white;
-            font-size: 18px;
-            margin-top: 10px;
-        }
+h1{
+  margin:0 0 25px;
+  font-weight:600;
+  font-size:28px;
+  background:linear-gradient(90deg,#ff4d6d,#ff85a2);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
 
-        #messageBox {
-            margin-top: 25px;
-            color: white;
-            font-size: 20px;
-            min-height: 30px;
-        }
+.buttons{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  position:relative;
+}
 
-        button {
-            font-size: 20px;
-            padding: 15px 25px;
-            margin: 10px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            position: absolute;
-            transition: all 0.25s ease;
-        }
+button{
+  padding:12px 30px;
+  border:none;
+  border-radius:14px;
+  font-size:15px;
+  cursor:pointer;
+  transition:.25s ease;
+  box-shadow:0 6px 18px rgba(255,105,135,0.25);
+}
 
-        #yesBtn {
-            background-color: #ff4d6d;
-            color: white;
-            position: static;
-            cursor: url('https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Red_Heart.svg/32px-Red_Heart.svg.png') 16 16, pointer;
-        }
+#yesBtn{
+  background:linear-gradient(135deg,#ff4d6d,#ff85a2);
+  color:white;
+}
 
-        #noBtn {
-            background-color: #333;
-            color: white;
-        }
+#yesBtn:hover{
+  transform:translateY(-2px) scale(1.05);
+}
 
-        #loveMessage {
-            margin-top: 50px;
-            font-size: 26px;
-            color: white;
-            display: none;
-        }
+#noBtn{
+  background:#ffe3ea;
+  color:#c94f7c;
+}
 
-        .heart {
-            position: fixed;
-            bottom: -10px;
-            color: pink;
-            font-size: 20px;
-            animation: floatUp 6s linear infinite;
-        }
+#forceYesText{
+  margin-top:12px;
+  font-size:14px;
+  color:#c94f7c;
+  display:none;
+}
 
-        @keyframes floatUp {
-            to {
-                transform: translateY(-110vh);
-                opacity: 0;
-            }
-        }
-    </style>
+#inviteText{
+  font-size:20px;
+  font-weight:600;
+  background:linear-gradient(90deg,#ff4d6d,#ff85a2);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.countdown{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  margin-top:10px;
+}
+
+.timebox{
+  background:#fff0f6;
+  padding:12px 14px;
+  border-radius:14px;
+  box-shadow:0 5px 15px rgba(255,105,135,0.15);
+  font-size:15px;
+  min-width:60px;
+  color:#c94f7c;
+  font-weight:600;
+}
+
+#finalMessage{
+  margin-top:14px;
+  font-size:16px;
+  color:#c94f7c;
+  line-height:1.6;
+}
+
+#teasePopup{
+  position:fixed;
+  background:#fff0f6;
+  padding:6px 10px;
+  border-radius:8px;
+  font-size:13px;
+  box-shadow:0 5px 15px rgba(255,105,135,0.2);
+  display:none;
+  z-index:10;
+  color:#c94f7c;
+}
+
+.heart-bg{
+  position:fixed;
+  font-size:18px;
+  animation:floatUp linear forwards;
+  z-index:1;
+}
+@keyframes floatUp{to{transform:translateY(-120vh);opacity:0;}}
+
+.burstHeart{
+  position:absolute;
+  font-size:26px;
+  animation:explode .9s ease forwards;
+  color:#ff6b81;
+}
+@keyframes explode{
+  to{transform:translate(var(--x),var(--y)) scale(0.4);opacity:0;}
+}
+</style>
 </head>
 <body>
 
-    <h1>Kashish, will you be my Valentine? 💖</h1>
-    <div id="countdownTop"></div>
-
-    <div id="messageBox"></div>
-
-    <div id="buttons" style="margin-top:50px;">
-        <button id="yesBtn">YES 💘</button>
-        <button id="noBtn">No 🙄</button>
+<div class="card" id="card">
+  <div id="questionSection">
+    <h1>Kashish, will you be my Valentine?</h1>
+    <div class="buttons">
+      <button id="yesBtn">Yes</button>
+      <button id="noBtn">No</button>
     </div>
+    <div id="forceYesText">Alright, im done with this, you dont have an option anymore</div>
+  </div>
 
-    <div id="loveMessage">
-        <div id="dateText" style="margin-bottom:15px;"></div>
-        <div id="dateCountdown"></div>
+  <div id="finalSection" style="display:none;">
+    <div id="inviteText">You're invited to our date in:</div>
+    <div class="countdown" id="dateCountdown"></div>
+    <div id="finalMessage">
+      Alright, that's a date! See you this Saturday Kishmish, you better not run away home, need my valentine more than ever, love you so much
     </div>
+  </div>
+</div>
 
-    <!-- Wanna Be Yours -->
-    <iframe width="0" height="0"
-    src="https://www.youtube.com/embed/nyuo9-OjNNg?autoplay=1&loop=1&playlist=nyuo9-OjNNg"
-    frameborder="0" allow="autoplay">
-    </iframe>
+<div id="teasePopup"></div>
+<iframe id="musicFrame" width="0" height="0" allow="autoplay"></iframe>
 
-    <script>
-        const noBtn = document.getElementById("noBtn");
-        const yesBtn = document.getElementById("yesBtn");
-        const loveMessage = document.getElementById("loveMessage");
-        const messageBox = document.getElementById("messageBox");
+<script>
+const yesBtn=document.getElementById("yesBtn");
+const noBtn=document.getElementById("noBtn");
+const teasePopup=document.getElementById("teasePopup");
+const finalSection=document.getElementById("finalSection");
+const questionSection=document.getElementById("questionSection");
+const dateCountdown=document.getElementById("dateCountdown");
+const card=document.getElementById("card");
+const musicFrame=document.getElementById("musicFrame");
+const forceYesText=document.getElementById("forceYesText");
 
-        let noClickCount = 0;
+let noClicks=0,musicStarted=false;
 
-        const insults = [
-            "Oops, seems like you missed it, either way, youre clicking the wrong button dumass",
-            "missed it again, get better stupid",
-            "wow you just cant click yes can you?",
-            "what a pathetic aim, you can never beat me",
-            "Just give up ffs",
-            "cant you just accept your loss?"
-        ];
+const insults=[
+"Oops, seems like you missed it, either way, youre clicking the wrong button dumass",
+"missed it again, get better stupid",
+"wow you just cant click yes can you?",
+"what a pathetic aim, you can never beat me",
+"Just give up ffs",
+"cant you just accept your loss?"
+];
 
-        noBtn.addEventListener("click", () => {
-            const x = Math.random() * (window.innerWidth - 120);
-            const y = Math.random() * (window.innerHeight - 80);
-            noBtn.style.left = x + "px";
-            noBtn.style.top = y + "px";
+document.body.addEventListener("click",()=>{
+ if(!musicStarted){
+  musicFrame.src="https://www.youtube.com/embed/nyuo9-OjNNg?autoplay=1&loop=1&playlist=nyuo9-OjNNg";
+  musicStarted=true;
+ }
+},{once:true});
 
-            if (noClickCount < insults.length) {
-                messageBox.innerText = insults[noClickCount];
-                noClickCount++;
-            }
+noBtn.addEventListener("click",()=>{
+ if(noClicks===0){
+   noBtn.style.position="fixed";
+ }
 
-            if (noClickCount === insults.length) {
-                yesBtn.innerText = "Alright, im done with this, you dont have an option anymore";
-                yesBtn.style.fontSize = "30px";
-                yesBtn.style.padding = "30px 50px";
-                yesBtn.style.transform = "scale(1.8)";
-            }
-        });
+ if(noClicks<insults.length){
+  const margin=120;
+  const x=Math.random()*(window.innerWidth-margin*2)+margin;
+  const y=Math.random()*(window.innerHeight-margin*2)+margin;
+  noBtn.style.left=x+"px";
+  noBtn.style.top=y+"px";
 
-        function createHeart() {
-            const heart = document.createElement("div");
-            heart.classList.add("heart");
-            heart.innerText = "💖";
-            heart.style.left = Math.random() * 100 + "vw";
-            heart.style.fontSize = (Math.random() * 20 + 10) + "px";
-            heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 6000);
-        }
-        setInterval(createHeart, 300);
+  teasePopup.innerText=insults[noClicks];
+  teasePopup.style.left=(x+20)+"px";
+  teasePopup.style.top=(y-30)+"px";
+  teasePopup.style.display="block";
+  noClicks++;
+ } else {
+  noBtn.style.display="none";
+  teasePopup.style.display="none";
+  yesBtn.style.transform="scale(1.5)";
+  forceYesText.style.display="block";
+ }
+});
 
-        const countdownTop = document.getElementById("countdownTop");
-        const valentineDate = new Date("Feb 14, 2026 00:00:00").getTime();
+yesBtn.addEventListener("click",()=>{
+ questionSection.style.display="none";
+ teasePopup.style.display="none";
 
-        setInterval(() => {
-            const now = new Date().getTime();
-            const distance = valentineDate - now;
+ for(let i=0;i<50;i++){
+  const h=document.createElement("div");
+  h.className="burstHeart";
+  h.innerText="❤";
+  h.style.left="50%";
+  h.style.top="50%";
+  h.style.setProperty('--x',(Math.random()*600-300)+'px');
+  h.style.setProperty('--y',(Math.random()*600-300)+'px');
+  card.appendChild(h);
+  setTimeout(()=>h.remove(),900);
+ }
 
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+ setTimeout(()=>finalSection.style.display="block",900);
 
-            countdownTop.innerHTML = "Countdown to Valentine's Day : " + days + "d " + hours + "h " + minutes + "m";
-        }, 60000);
+ const now=new Date();
+ const sat=new Date();
+ const diff=(6-now.getDay()+7)%7||7;
+ sat.setDate(now.getDate()+diff);
+ sat.setHours(18,0,0);
 
-        yesBtn.addEventListener("click", () => {
-            loveMessage.style.display = "block";
-            document.getElementById("buttons").style.display = "none";
-            messageBox.style.display = "none";
+ setInterval(()=>{
+  const dist=sat-new Date();
+  const d=Math.floor(dist/86400000);
+  const h=Math.floor(dist/3600000)%24;
+  const m=Math.floor(dist/60000)%60;
+  const s=Math.floor(dist/1000)%60;
+  dateCountdown.innerHTML=box(d,"Days")+box(h,"Hours")+box(m,"Min")+box(s,"Sec");
+ },1000);
+});
 
-            const dateText = document.getElementById("dateText");
-            const countdownEl = document.getElementById("dateCountdown");
+function box(v,l){return `<div class="timebox">${v}<br><small>${l}</small></div>`}
 
-            dateText.innerHTML = "Alright, that's a date! See you this Saturday Kishmish, you better not run away home, need my valentine more than ever, love you so much ";
-
-            const now = new Date();
-            const todayDay = now.getDay();
-            const daysUntilSaturday = (6 - todayDay + 7) % 7 || 7;
-
-            const saturday = new Date();
-            saturday.setDate(now.getDate() + daysUntilSaturday);
-            saturday.setHours(18, 0, 0);
-
-            function updateCountdown() {
-                const currentTime = new Date().getTime();
-                const distance = saturday.getTime() - currentTime;
-
-                if (distance <= 0) {
-                    countdownEl.innerHTML = "IT'S DATE TIME ";
-                    return;
-                }
-
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-
-                countdownEl.innerHTML = "Countdown to our date : " + days + "d " + hours + "h " + minutes + "m";
-            }
-
-            updateCountdown();
-            setInterval(updateCountdown, 60000);
-        });
-    </script>
+function bgHeart(){
+ const h=document.createElement("div");
+ h.className="heart-bg";
+ h.innerText="❤";
+ h.style.left=Math.random()*100+"vw";
+ h.style.animationDuration=(Math.random()*3+4)+"s";
+ document.body.appendChild(h);
+ setTimeout(()=>h.remove(),7000);
+}
+setInterval(bgHeart,400);
+</script>
 
 </body>
 </html>
