@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>For Kashish </title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(45deg, #ff9a9e, #fecfef);
+            overflow: hidden;
+            cursor: url('https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Red_Heart.svg/32px-Red_Heart.svg.png') 16 16, auto;
+        }
+
+        h1 {
+            margin-top: 90px;
+            font-size: 42px;
+            color: white;
+        }
+
+        #countdownTop {
+            color: white;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+        #messageBox {
+            margin-top: 25px;
+            color: white;
+            font-size: 20px;
+            min-height: 30px;
+        }
+
+        button {
+            font-size: 20px;
+            padding: 15px 25px;
+            margin: 10px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            position: absolute;
+            transition: all 0.25s ease;
+        }
+
+        #yesBtn {
+            background-color: #ff4d6d;
+            color: white;
+            position: static;
+            cursor: url('https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Red_Heart.svg/32px-Red_Heart.svg.png') 16 16, pointer;
+        }
+
+        #noBtn {
+            background-color: #333;
+            color: white;
+        }
+
+        #loveMessage {
+            margin-top: 50px;
+            font-size: 26px;
+            color: white;
+            display: none;
+        }
+
+        .heart {
+            position: fixed;
+            bottom: -10px;
+            color: pink;
+            font-size: 20px;
+            animation: floatUp 6s linear infinite;
+        }
+
+        @keyframes floatUp {
+            to {
+                transform: translateY(-110vh);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Kashish, will you be my Valentine? 💖</h1>
+    <div id="countdownTop"></div>
+
+    <div id="messageBox"></div>
+
+    <div id="buttons" style="margin-top:50px;">
+        <button id="yesBtn">YES 💘</button>
+        <button id="noBtn">No 🙄</button>
+    </div>
+
+    <div id="loveMessage">
+        <div id="dateText" style="margin-bottom:15px;"></div>
+        <div id="dateCountdown"></div>
+    </div>
+
+    <!-- Wanna Be Yours -->
+    <iframe width="0" height="0"
+    src="https://www.youtube.com/embed/nyuo9-OjNNg?autoplay=1&loop=1&playlist=nyuo9-OjNNg"
+    frameborder="0" allow="autoplay">
+    </iframe>
+
+    <script>
+        const noBtn = document.getElementById("noBtn");
+        const yesBtn = document.getElementById("yesBtn");
+        const loveMessage = document.getElementById("loveMessage");
+        const messageBox = document.getElementById("messageBox");
+
+        let noClickCount = 0;
+
+        const insults = [
+            "Oops, seems like you missed it, either way, youre clicking the wrong button dumass",
+            "missed it again, get better stupid",
+            "wow you just cant click yes can you?",
+            "what a pathetic aim, you can never beat me",
+            "Just give up ffs",
+            "cant you just accept your loss?"
+        ];
+
+        noBtn.addEventListener("click", () => {
+            const x = Math.random() * (window.innerWidth - 120);
+            const y = Math.random() * (window.innerHeight - 80);
+            noBtn.style.left = x + "px";
+            noBtn.style.top = y + "px";
+
+            if (noClickCount < insults.length) {
+                messageBox.innerText = insults[noClickCount];
+                noClickCount++;
+            }
+
+            if (noClickCount === insults.length) {
+                yesBtn.innerText = "Alright, im done with this, you dont have an option anymore";
+                yesBtn.style.fontSize = "30px";
+                yesBtn.style.padding = "30px 50px";
+                yesBtn.style.transform = "scale(1.8)";
+            }
+        });
+
+        function createHeart() {
+            const heart = document.createElement("div");
+            heart.classList.add("heart");
+            heart.innerText = "💖";
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+            heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 6000);
+        }
+        setInterval(createHeart, 300);
+
+        const countdownTop = document.getElementById("countdownTop");
+        const valentineDate = new Date("Feb 14, 2026 00:00:00").getTime();
+
+        setInterval(() => {
+            const now = new Date().getTime();
+            const distance = valentineDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+            countdownTop.innerHTML = "Countdown to Valentine's Day : " + days + "d " + hours + "h " + minutes + "m";
+        }, 60000);
+
+        yesBtn.addEventListener("click", () => {
+            loveMessage.style.display = "block";
+            document.getElementById("buttons").style.display = "none";
+            messageBox.style.display = "none";
+
+            const dateText = document.getElementById("dateText");
+            const countdownEl = document.getElementById("dateCountdown");
+
+            dateText.innerHTML = "Alright, that's a date! See you this Saturday Kishmish, you better not run away home, need my valentine more than ever, love you so much ";
+
+            const now = new Date();
+            const todayDay = now.getDay();
+            const daysUntilSaturday = (6 - todayDay + 7) % 7 || 7;
+
+            const saturday = new Date();
+            saturday.setDate(now.getDate() + daysUntilSaturday);
+            saturday.setHours(18, 0, 0);
+
+            function updateCountdown() {
+                const currentTime = new Date().getTime();
+                const distance = saturday.getTime() - currentTime;
+
+                if (distance <= 0) {
+                    countdownEl.innerHTML = "IT'S DATE TIME ";
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+                countdownEl.innerHTML = "Countdown to our date : " + days + "d " + hours + "h " + minutes + "m";
+            }
+
+            updateCountdown();
+            setInterval(updateCountdown, 60000);
+        });
+    </script>
+
+</body>
+</html>
